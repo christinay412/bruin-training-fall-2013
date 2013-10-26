@@ -41,10 +41,12 @@ class IndexView(TemplateView):
 
         # Here we can get a list of all of the unique contributor names
         # along with their total contributions
-        contributors = Contribution.objects.values('clean_name')\
+        contributors = Contribution.objects.values('clean_name', 'committee')\
                     .annotate(contribs=Sum('amount')).order_by('-contribs')
+        #committee = Contribution.objects.values('clean_name').annotate(committee='committee')
 
         context['contributors'] = contributors[0:10]
+        #context['committee'] = committee[0:10]
         context['max_value'] = max(all_vals)
         context['summary_data'] = data
         return context

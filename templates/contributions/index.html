@@ -4,24 +4,35 @@
 {% block extra-css %}
 <style type="text/css">
     .page-header {
-        background-color:pink;
+        color: #339999;
+        font-family: Verdana, Geneva, sans-serif;
     }
 
     h2 {
-        font-family: arial;
-        color: green;
+        font-family: Verdana, Geneva, sans-serif;
+        font-style: italic;
+        color: #606060;
+        font-size: 20px;
+        border-bottom-style: dashed;
+        border-bottom-color: #66CCCC;
     }
+
     .bar {
         height: 30px;
         display:inline-block;
         float:left;
         margin:1px 0;
     }
+    
+    .table-striped {
+        background-color: 
+    }
+
     .oppose {
-        background: blue;
+        background: #00CC99;
     }
     .support {
-        background: green;
+        background: #404040;
     }
     .bar-label {
         display:inline-block;
@@ -31,6 +42,10 @@
     .bar-container {
         clear:both;
     }
+
+    .table-striped {
+        background-color: #009999;
+    }
     .clear {
         clear:both;
     }
@@ -39,16 +54,17 @@
 
 {% block content %}
 <div class="container">
-    <div class="page-header">
+    <div class="page-header pagination-centered">
         <h1>Contribution Data</h1>
     </div>
 
     <h2>Money by contributor</h2>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Committee</th>
                 <th>Amount</th>
             </tr>
         </thead>
@@ -56,14 +72,14 @@
             {% for i in contributors %}
             <tr>
                 <td>{{ i.clean_name }}</td>
+                <td>{{ i.committee }}</td>
                 <td>${{ i.contribs|intcomma }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-
+    <div align=center><canvas id="myChart" width="400" height="400"></canvas></div>
     <h2>Money by Prop.</h2>
-    
     {% for i in summary_data %}
     <h4>Prop. {{ i.prop }}</h4>
     <div class="bar-container">
