@@ -1,3 +1,4 @@
+import json
 from django.db.models import Sum, Count
 from django.views.generic import TemplateView
 from contributions.models import Prop, Contribution
@@ -41,12 +42,17 @@ class IndexView(TemplateView):
 
         # Here we can get a list of all of the unique contributor names
         # along with their total contributions
-        contributors = Contribution.objects.values('clean_name', 'committee')\
-                    .annotate(contribs=Sum('amount')).order_by('-contribs')
+        contributors = Contribution.objects.values('clean_name', 'committee__name')\
+                    .annotate(contribs=Sum('amount')).order_by('-contribs')[0:10]
+        print contributors
         #committee = Contribution.objects.values('clean_name').annotate(committee='committee')
-
-        context['contributors'] = contributors[0:10]
-        #context['committee'] = committee[0:10]
+        amt = 0
+        for i in contributors: 
+            amt = amt + i['contribs']
+        
+        
+        context['contributors'] = contributors
+        context['total_amount'] = amt
         context['max_value'] = max(all_vals)
         context['summary_data'] = data
         return context

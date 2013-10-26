@@ -58,7 +58,7 @@
         <h1>Contribution Data</h1>
     </div>
 
-    <h2>Money by contributor</h2>
+    <h2>Money by contributor for individual committee</h2>
 
     <table class="table table-striped">
         <thead>
@@ -72,13 +72,18 @@
             {% for i in contributors %}
             <tr>
                 <td>{{ i.clean_name }}</td>
-                <td>{{ i.committee }}</td>
+                <td>{{ i.committee__name }}</td>
                 <td>${{ i.contribs|intcomma }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <div align=center><canvas id="myChart" width="400" height="400"></canvas></div>
+    <div align=center>
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+    <div align=left>
+        Total Amount of Top 10 Contributions: ${{ total_amount|intcomma }}
+    </div> 
     <h2>Money by Prop.</h2>
     {% for i in summary_data %}
     <h4>Prop. {{ i.prop }}</h4>
